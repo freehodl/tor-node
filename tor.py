@@ -38,8 +38,7 @@ class Tor(object):
             print('Try https://github.com/lightning-power-users/node-launcher')
             sys.exit("Onion Node is shutting down...")
 
-    def edit_bitcoin_conf():
-        print('Onion Node is preparing your system...') 
+    def edit_bitcoin_conf()
         for i in tqdm(range(100), desc="Configuring bitcoin.conf"):
             time.sleep(0.02)
         f = open(str(BITCOIN_CONF_PATH[OPERATING_SYSTEM]) , 'a')
