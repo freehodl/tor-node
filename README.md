@@ -8,7 +8,7 @@ You could use TOR if you don't want anyone to know you're even using Bitcoin.
 2. LND - https://github.com/lightningnetwork/lnd
 3. Windows 7+, macOS 10.12.6+, Ubuntu 18.04.1
 
-If you don't have nodes set up we suggest using https://raw.githubusercontent.com/lightning-power-users/node-launcher.
+If you don't have nodes set up we suggest using https://github.com/lightning-power-users/node-launcher.
 
 # Install
 
