@@ -1,6 +1,5 @@
 import sys
 import getpass
-import lsb_release
 import time
 import urllib
 import subprocess
@@ -8,7 +7,7 @@ import zipfile
 import os
 import os.path
 from os.path import expanduser
-from urllib.request import urlopen
+from urllib.request import urlopen, urlretrieve
 from subprocess import call, Popen, PIPE
 from tempfile import NamedTemporaryFile
 from typing import List, Optional
@@ -38,7 +37,7 @@ class Tor(object):
             print('Try https://github.com/lightning-power-users/node-launcher')
             sys.exit("Onion Node is shutting down...")
 
-    def edit_bitcoin_conf()
+    def edit_bitcoin_conf():
         for i in tqdm(range(100), desc="Configuring bitcoin.conf"):
             time.sleep(0.02)
         f = open(str(BITCOIN_CONF_PATH[OPERATING_SYSTEM]) , 'a')
@@ -64,78 +63,23 @@ class Tor(object):
         f.close()
 
     def downloadtor():
-        for i in tqdm(range(100), unit_scale=True, desc="Downloading Tor", unit='epoch'):
-            time.sleep(0.12)
         if IS_WINDOWS:
-            url = 'https://www.torproject.org/dist/torbrowser/8.0.4/tor-win32-0.3.4.9.zip'
-            f = urllib.request.urlopen(url)
-            file = f.read()
-            f.close()
-            f2 = open('tor-win32-0.3.4.9.zip', 'wb')
-            f2.write(file)
-            f2.close()
+            for i in tqdm(range(1), desc="Downloading Tor..."):
+                url = 'https://www.torproject.org/dist/torbrowser/8.0.4/tor-win32-0.3.4.9.zip'
+                f = urllib.request.urlopen(url)
+                file = f.read()
+                f.close()
+                f2 = open('tor-win32-0.3.4.9.zip', 'wb')
+                f2.write(file)
+                f2.close()
         elif IS_MACOS:
-            url = 'https://www.torproject.org/dist/torbrowser/8.0.4/TorBrowser-8.0.4-osx64_en-US.dmg'
-            urllib.request.urlretrieve(url, expanduser('~/Downloads/TorBrowser-8.0.4-osx64_en-US.dmg'))
-
-    def deb_install():
-
-        def deb_permissions():
-            for i in tqdm(range(100), desc="Updating user permissions"):
-                time.sleep(0.02)
-            bashcommand_chmod = 'sudo chmod a+rw /etc/apt/sources.list'
-            subprocess.run(['bash', '-c', bashcommand_chmod])
-
-        def deb_install_tor():
-            release = lsb_release.get_lsb_information()
-            codename = release.get('CODENAME')
-            deba = 'deb http://deb.torproject.org/torproject.org ', str(codename),' main\n'
-            deb_line = ""
-            deb_line = deb_line.join(deba)
-            debb = 'deb-src http://deb.torproject.org/torproject.org ', str(codename), ' main'
-            deb_src = ""
-            deb_src = deb_src.join(debb)
-            f = open('/etc/apt/sources.list', 'a')
-            f.write(deb_line)
-            f.write(str(deb_src))
-            f.close()
-            print('Installing Tor.....')
-            bashcommand_gpg_key = 'gpg --keyserver keys.gnupg.net --recv 886DDD89'
-            bashcommand_gpg_export = 'gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -'
-            bashcommand_update = 'sudo apt-get update'
-            bashcommand_install_tor = 'sudo apt-get install tor deb.torproject.org-keyring'
-            subprocess.run(['bash', '-c', bashcommand_gpg_key])
-            subprocess.run(['bash', '-c', bashcommand_gpg_export])
-            subprocess.run(['bash', '-c', bashcommand_update])
-            subprocess.run(['bash', '-c', bashcommand_install_tor])
-
-        def deb_modify_user():
-            for i in tqdm(range(100), desc="Adding user to Tor user group"):
-                time.sleep(0.02)
-            for line in open("/usr/share/tor/tor-service-defaults-torrc"):
-                if "User" in line:
-                    newline = line.replace("User ", "")
-                    newline = str(newline.rstrip())
-                    tor_user = str(newline)
-                continue
-            username = str(getpass.getuser())
-            bashcommand_modify = 'sudo usermod -a -G ', str(tor_user), ' ', str(username)
-            bashcommand_usermod = ""
-            bashcommand_usermod = bashcommand_usermod.join(bashcommand_modify)
-            subprocess.run(['bash', '-c', bashcommand_usermod])
-            print('NOTE: You may need to restart your node after Onion Node setup is complet')
-            print('Oninion Node setup is complete!')
-            time.sleep(3)       
-        
-        if IS_LINUX:
-            deb_permissions()
-            deb_install_tor()
-            deb_modify_user()
+            for i in tqdm(range(1), desc="Downloading Tor..."):
+                url = 'https://www.torproject.org/dist/torbrowser/8.0.4/TorBrowser-8.0.4-osx64_en-US.dmg'
+                urllib.request.urlretrieve(url, expanduser('~/Downloads/TorBrowser-8.0.4-osx64_en-US.dmg'))
 
     def installtor():
-        for i in tqdm(range(100), desc="Adding user to Tor user group"):
-                time.sleep(0.12)
         if IS_WINDOWS:
+            print('Installing Tor...')
             torpath = str(TOR_PATH[OPERATING_SYSTEM])
             if not os.path.exists(torpath):
                 os.makedirs(torpath)
@@ -143,6 +87,7 @@ class Tor(object):
             zip_ref.extractall(torpath)
             zip_ref.close()
         elif IS_MACOS:
+            print('Installing Tor...')
             bash_torpath = expanduser('~/Library/Application\ Support/Tor/')
             torpath = expanduser('~/Library/Application Support/Tor/')
             if not os.path.exists(torpath):
@@ -157,19 +102,30 @@ class Tor(object):
             subprocess.run(['bash', '-c', bashcommand_detach])
 
     def runtor():
-        for i in tqdm(range(100), desc="Starting Tor"):
-                time.sleep(0.02)
-        if IS_WINDOWS:
-            subprocess.Popen(str(TOR_EXE_PATH[OPERATING_SYSTEM]))
-        elif IS_MACOS:
-            subprocess.Popen(expanduser('~/Library/Application Support/Tor/Tor Browser.app/Contents/MacOS/Tor/tor.real'))
-        print('NOTE: You may need to restart your node after Onion Node setup is complet')
-        print('Oninion Node setup is complete!')
-        time.sleep(1)       
-
+        print('Launching Tor...')
+        path= expanduser('~/Library/Application\ Support/Tor/Tor\ Browser.app/Contents/MacOS/Tor/tor.real')
+        cmd = path
+        if IS_MACOS:
+            with NamedTemporaryFile(suffix='-run_tor.command', delete=False) as f:
+                f.write(f'#!/bin/sh\n{cmd}\n'.encode('utf-8'))
+                f.flush()
+                call(['chmod', 'u+x', f.name])
+                result = Popen(['open', '-W', f.name], close_fds=True)
+        elif IS_WINDOWS:
+            from subprocess import DETACHED_PROCESS, CREATE_NEW_PROCESS_GROUP
+            with NamedTemporaryFile(suffix='-run_tor.bat', delete=False) as f:
+                f.write(cmd.encode('utf-8'))
+                f.flush()
+                result = Popen(
+                    ['start', 'powershell', '-noexit', '-Command', f.name],
+                    stdin=PIPE, stdout=PIPE, stderr=PIPE,
+                    creationflags=DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP,
+                    close_fds=True, shell=True)
+        print('NOTE: You may need to restart your node after Onion Node setup is complete')
+        print('Onion Node setup is complete!')
 
     def write_torrc():
-        for i in tqdm(range(100), desc="Adding user to Tor user group"):
+        for i in tqdm(range(100), desc="Configuring torrc..."):
                 time.sleep(0.02)
         if IS_WINDOWS or IS_MACOS:
             tordatapath = str(TOR_DATA_PATH[OPERATING_SYSTEM])

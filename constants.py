@@ -58,7 +58,7 @@ BITCOIN_DATA_PATH: Dict[OperatingSystem, str] = {
 }
 
 BITCOIN_CONF_PATH: Dict[OperatingSystem, str] = {
-    DARWIN: expanduser('~/Library/Application Support/Bitcoin/'),
+    DARWIN: expanduser('~/Library/Application Support/Bitcoin/bitcoin.conf'),
     LINUX: expanduser('~/.bitcoin/bitcoin.conf'),
     WINDOWS: os.path.join(APPDATA, r'Bitcoin\bitcoin.conf')
 }
