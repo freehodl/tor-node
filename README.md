@@ -5,7 +5,7 @@ You could use TOR if you don't want anyone to know you're even using Bitcoin.
 
 # Requirements
 1. Bitcoin Core - https://bitcoincore.org/en/download
-2. LND - https://github.com/lightningnetwork/lnd - will only configure Bitcoin full node if no LND node is present
+2. LND - https://github.com/lightningnetwork/lnd - will still configure Bitcoin full node if no LND node is present
 3. Windows 7+, macOS 10.12.6+, Ubuntu 18.04.1
 
 If you don't have nodes set up we suggest using https://github.com/lightning-power-users/node-launcher.
