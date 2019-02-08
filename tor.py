@@ -22,45 +22,71 @@ class Tor(object):
 
     def find_nodes():
         print('Onion Node is preparing your system...')
-        for i in tqdm(range(100), desc="Looking for nodes"):
-            time.sleep(0.02)
+        lnd = ""
+        pbar = tqdm(total=100, desc="Looking for nodes")
+        if os.path.exists(str(BITCOIN_DATA_PATH[OPERATING_SYSTEM])):
+            pbar.update(50)
         if not os.path.exists(str(BITCOIN_DATA_PATH[OPERATING_SYSTEM])):
+            pbar.update(50)
             print('Onion Node was unable to find a Bitcoin full node on this system')
             time.sleep(1)
             print('Setup a Bitcoin full node before using Onion Node')
             print('Try https://github.com/lightning-power-users/node-launcher')
             sys.exit("Onion Node is shutting down...")
+        if os.path.exists(str(LND_DIR_PATH[OPERATING_SYSTEM])):
+            pbar.update(50)
+            pbar.close()
+            Tor.edit_lnd_conf()
         elif not os.path.exists(str(LND_DIR_PATH[OPERATING_SYSTEM])):
+            pbar.update(50)
+            pbar.close()
             print('Onion Node was unbale to find a LND node on this system')
             time.sleep(1)
-            print('Setup an LND node before using Onion Node') 
+            print('Onion Node will continue without configuring LND') 
+            time.sleep(1)
             print('Try https://github.com/lightning-power-users/node-launcher')
-            sys.exit("Onion Node is shutting down...")
+
+                
 
     def edit_bitcoin_conf():
-        for i in tqdm(range(100), desc="Configuring bitcoin.conf"):
-            time.sleep(0.02)
+        pbar = tqdm(total=100, desc="Configuring bitcoin.conf")
         f = open(str(BITCOIN_CONF_PATH[OPERATING_SYSTEM]) , 'a')
+        pbar.update(20)
         f.write('proxy=127.0.0.1:9050\n')
+        pbar.update(20)
         f.write('listen=1\n')
+        pbar.update(20)
         f.write('bind=127.0.0.1\n')
+        pbar.update(20)
         f.write('debug=tor\n')
+        pbar.update(20)
         f.close()
+        pbar.close()
 
 
     def edit_lnd_conf():
-        for i in tqdm(range(100), desc="Configuring lnd.conf"):
-            time.sleep(0.02)
+        pbar=tqdm(total=100, desc="Configuring lnd.conf")
         f = open(str(LND_CONF_PATH[OPERATING_SYSTEM]) , 'a')
+        pbar.update(10)
         f.write(' \n')
+        pbar.update(10)
         f.write('[Application Options]\n')
+        pbar.update(10)
         f.write('listen=localhost\n')
+        pbar.update(10)
         f.write(' \n')
+        pbar.update(10)
         f.write('[tor]\n')
+        pbar.update(10)
         f.write('tor.active=1\n')
+        pbar.update(10)
         f.write('tor.v3=1\n')
+        pbar.update(10)
         f.write('tor.streamisolation=1\n')
+        pbar.update(10)
         f.close()
+        pbar.update(10)
+        pbar.close()
 
     def downloadtor():
         if IS_WINDOWS:
@@ -73,9 +99,17 @@ class Tor(object):
                 f2.write(file)
                 f2.close()
         elif IS_MACOS:
-            for i in tqdm(range(1), desc="Downloading Tor..."):
-                url = 'https://www.torproject.org/dist/torbrowser/8.0.4/TorBrowser-8.0.4-osx64_en-US.dmg'
-                urllib.request.urlretrieve(url, expanduser('~/Downloads/TorBrowser-8.0.4-osx64_en-US.dmg'))
+            pbar = tqdm(total=100, desc="Downloading Tor")
+            url = 'https://www.torproject.org/dist/torbrowser/8.0.4/TorBrowser-8.0.4-osx64_en-US.dmg'
+            time.sleep(1)
+            pbar.update(30)
+            time.sleep(1)
+            pbar.update(30)
+            urllib.request.urlretrieve(url, expanduser('~/Downloads/TorBrowser-8.0.4-osx64_en-US.dmg'))
+            pbar.update(40)
+
+
+
 
         def deb_install():
 
@@ -203,7 +237,6 @@ def launch():
     if IS_MACOS or IS_WINDOWS:
         Tor.find_nodes()
         Tor.edit_bitcoin_conf()
-        Tor.edit_lnd_conf()
         Tor.downloadtor()
         Tor.installtor()
         Tor.write_torrc()
@@ -211,7 +244,6 @@ def launch():
     elif IS_LINUX:
         Tor.find_nodes()
         Tor.edit_bitcoin_conf()
-        Tor.edit_lnd_conf()
         Tor.deb_install()
 
 launch()
