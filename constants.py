@@ -80,5 +80,6 @@ TOR_PATH: Dict[OperatingSystem, str] = {
 }
 
 TOR_EXE_PATH: Dict[OperatingSystem, str] = {
-    WINDOWS: os.path.join(LOCALAPPDATA, r'tor\tor\tor.exe')
+    WINDOWS: os.path.join(LOCALAPPDATA, r'tor\tor\tor.exe'),
+    DARWIN: expanduser('~/Library/Application\ Support/Tor/Tor\ Browser.app/Contents/MacOS/Tor/tor.real')
 }

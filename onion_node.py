@@ -9,8 +9,8 @@ from constants import BITCOIN_DATA_PATH, BITCOIN_CONF_PATH, TOR_DATA_PATH, \
     IS_MACOS, IS_LINUX
 
 def run():
-        path= expanduser('~/onion_node/tor.py')
-        command= 'python3 '
+        path= expanduser('~\onion-node\\tor.py')
+        command= 'python '
         cmd = command + path
         if IS_MACOS:
             with NamedTemporaryFile(suffix='-onionnode.command', delete=False) as f:

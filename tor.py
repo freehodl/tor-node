@@ -190,15 +190,18 @@ class Tor(object):
 
     def runtor():
         print('Launching Tor...')
-        path= expanduser('~/Library/Application\ Support/Tor/Tor\ Browser.app/Contents/MacOS/Tor/tor.real')
-        cmd = path
+
         if IS_MACOS:
+            path= TOR_EXE_PATH[OPERATING_SYSTEM]
+            cmd = path
             with NamedTemporaryFile(suffix='-run_tor.command', delete=False) as f:
                 f.write(f'#!/bin/sh\n{cmd}\n'.encode('utf-8'))
                 f.flush()
                 call(['chmod', 'u+x', f.name])
                 result = Popen(['open', '-W', f.name], close_fds=True)
         elif IS_WINDOWS:
+            path = TOR_EXE_PATH[OPERATING_SYSTEM]
+            cmd = path
             from subprocess import DETACHED_PROCESS, CREATE_NEW_PROCESS_GROUP
             with NamedTemporaryFile(suffix='-run_tor.bat', delete=False) as f:
                 f.write(cmd.encode('utf-8'))
