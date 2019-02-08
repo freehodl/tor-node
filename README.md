@@ -28,3 +28,10 @@ macOS
 
 ![Onion Node on macOS](https://github.com/freehodl/onion-node/blob/master/macos.png)
 
+# Development
+
+1. git clone https://github.com/freehodl/onion-node onion-node
+2. Setup a Python 3.7+ virtual environment
+3. pip install -r requirements.txt
+4. python onion_node.py
+
