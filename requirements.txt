@@ -1,3 +1,0 @@
-tqdm
-lsb_release
-pyinstaller
