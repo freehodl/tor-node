@@ -23,3 +23,8 @@ Onion Node makes it easy to run a Bitcoin full node and LND node over Tor.
 2. Downloads appropriate Tor package for the operating system (Linux(Debian), MacOS, or Windows) 
 3. Installs Tor
 2. Appends configuration perameters to bitcoin.conf, lnd.conf, and torrc
+
+macOS
+
+![Onion Node on macOS](https://github.com/freehodl/onion-node/blob/master/macos.png)
+
