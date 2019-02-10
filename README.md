@@ -13,25 +13,25 @@ If you don't have nodes set up we suggest using https://github.com/lightning-pow
 # Install
 
 Download and open the latest release for your operating system:
-https://github.com/freehodl/onion-node/realeases
+https://github.com/freehodl/tor-node/realeases
 
-# Onion Node
+# TOR Node
 
-Onion Node makes it easy to run a Bitcoin full node and LND node over Tor.
+TOR Node makes it easy to run a Bitcoin full node and LND node over TOR.
 
 1. Finds Bitcoin Core and LND  
-2. Downloads appropriate Tor package for the operating system (Linux(Debian), macOS, or Windows) 
-3. Installs Tor
+2. Downloads appropriate TOR package for the operating system (Linux(Debian), macOS, or Windows) 
+3. Installs TOR
 2. Appends configuration perameters to bitcoin.conf, lnd.conf, and torrc
 
 macOS
 
-![Onion Node on macOS](https://github.com/freehodl/onion-node/blob/master/macos.png)
+![TOR Node on macOS](https://github.com/freehodl/tor-node/blob/master/macos.png)
 
 # Development
 
-1. git clone https://github.com/freehodl/onion-node.git onion-node
+1. git clone https://github.com/freehodl/tor-node.git tor-node
 2. Setup a Python 3.7+ virtual environment
 3. pip install tqdm
-4. python onion_node.py
+4. python run.py
 
