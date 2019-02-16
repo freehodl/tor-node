@@ -64,7 +64,7 @@ class Tor(object):
         time.sleep(2)
 
     def downloadtor():
-        print('Downloading tor...')
+        print('Downloading Tor...')
         if IS_WINDOWS:
             url = 'https://www.torproject.org/dist/torbrowser/8.0.5/tor-win32-0.3.5.7.zip'
             f = urllib.request.urlopen(url)
@@ -166,7 +166,7 @@ class Tor(object):
                 f.flush()
                 call(['chmod', 'u+x', f.name])
                 result = Popen(['open', '-W', f.name], close_fds=True)
-                        time.sleep(2)
+                time.sleep(2)
             print('TOR Node setup is complete!')
         elif IS_WINDOWS:
             path = TOR_EXE_PATH[OPERATING_SYSTEM]

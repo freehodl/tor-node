@@ -20,8 +20,8 @@ def run():
                 call(['chmod', 'u+x', f.name])
                 result = Popen(['open', '-W', f.name], close_fds=True)
         elif IS_WINDOWS:
-            path= expanduser('~\tor-node\tor_node.py')
-            command= 'python3 '
+            path= expanduser('~\\tor-node\\tor_node.py')
+            command= 'python '
             cmd = command + path
             from subprocess import DETACHED_PROCESS, CREATE_NEW_PROCESS_GROUP
             with NamedTemporaryFile(suffix='-tor.bat', delete=False) as f:
