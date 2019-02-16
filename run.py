@@ -12,7 +12,7 @@ def run():
 
         if IS_MACOS:
             path= expanduser('~/tor-node/tor_node.py')
-            command= 'python '
+            command= 'python3 '
             cmd = command + path
             with NamedTemporaryFile(suffix='-tor.command', delete=False) as f:
                 f.write(f'#!/bin/sh\n{cmd}\n'.encode('utf-8'))
@@ -21,7 +21,7 @@ def run():
                 result = Popen(['open', '-W', f.name], close_fds=True)
         elif IS_WINDOWS:
             path= expanduser('~\tor-node\tor_node.py')
-            command= 'python '
+            command= 'python3 '
             cmd = command + path
             from subprocess import DETACHED_PROCESS, CREATE_NEW_PROCESS_GROUP
             with NamedTemporaryFile(suffix='-tor.bat', delete=False) as f:

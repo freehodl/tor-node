@@ -15,7 +15,6 @@ from typing import List, Optional
 from constants import BITCOIN_DATA_PATH, BITCOIN_CONF_PATH, TOR_DATA_PATH, \
     TOR_TORRC_PATH, LND_CONF_PATH , TOR_PATH, TOR_EXE_PATH, OPERATING_SYSTEM, IS_WINDOWS, \
     IS_MACOS, IS_LINUX, LND_DIR_PATH
-from tqdm import tqdm
 import time
 
 class Tor(object):
@@ -67,16 +66,16 @@ class Tor(object):
     def downloadtor():
         print('Downloading tor...')
         if IS_WINDOWS:
-            url = 'https://www.torproject.org/dist/torbrowser/8.0.4/tor-win32-0.3.4.9.zip'
+            url = 'https://www.torproject.org/dist/torbrowser/8.0.5/tor-win32-0.3.5.7.zip'
             f = urllib.request.urlopen(url)
             file = f.read()
             f.close()
-            f2 = open('tor-win32-0.3.4.9.zip', 'wb')
+            f2 = open('tor-win32-0.3.5.7.zip', 'wb')
             f2.write(file)
             f2.close()
         elif IS_MACOS:
-            url = 'https://www.torproject.org/dist/torbrowser/8.0.4/TorBrowser-8.0.4-osx64_en-US.dmg'
-            urllib.request.urlretrieve(url, expanduser('~/Downloads/TorBrowser-8.0.4-osx64_en-US.dmg'))
+            url = 'https://www.torproject.org/dist/torbrowser/8.0.5/TorBrowser-8.0.5-osx64_en-US.dmg'
+            urllib.request.urlretrieve(url, expanduser('~/Downloads/TorBrowser-8.0.5-osx64_en-US.dmg'))
 
     def deb_install():
 
@@ -138,7 +137,7 @@ class Tor(object):
             torpath = str(TOR_PATH[OPERATING_SYSTEM])
             if not os.path.exists(torpath):
                 os.makedirs(torpath)
-            zip_ref = zipfile.ZipFile(r'tor-win32-0.3.4.9.zip', 'r')
+            zip_ref = zipfile.ZipFile(r'tor-win32-0.3.5.7.zip', 'r')
             zip_ref.extractall(torpath)
             zip_ref.close()
             time.sleep(2)
@@ -148,7 +147,7 @@ class Tor(object):
             torpath = expanduser('~/Library/Application Support/Tor/')
             if not os.path.exists(torpath):
                 os.makedirs(torpath)
-            bashcommand_attach = 'hdiutil attach ~/Downloads/TorBrowser-8.0.4-osx64_en-US.dmg'
+            bashcommand_attach = 'hdiutil attach ~/Downloads/TorBrowser-8.0.5-osx64_en-US.dmg'
             bashcommand_detach = 'hdiutil detach /Volumes/Tor\ Browser'
             cp = ["cp -R /Volumes/Tor\ Browser/Tor\ Browser.app ", str(bash_torpath)]
             bashcommand_cp =  ""
@@ -158,8 +157,7 @@ class Tor(object):
             subprocess.run(['bash', '-c', bashcommand_detach])
 
     def runtor():
-        print('Launching Tor')    
-
+        print('Launching Tor...')    
         if IS_MACOS:
             path= TOR_EXE_PATH[OPERATING_SYSTEM]
             cmd = path
@@ -168,6 +166,8 @@ class Tor(object):
                 f.flush()
                 call(['chmod', 'u+x', f.name])
                 result = Popen(['open', '-W', f.name], close_fds=True)
+                        time.sleep(2)
+            print('TOR Node setup is complete!')
         elif IS_WINDOWS:
             path = TOR_EXE_PATH[OPERATING_SYSTEM]
             cmd = path
@@ -180,9 +180,9 @@ class Tor(object):
                     stdin=PIPE, stdout=PIPE, stderr=PIPE,
                     creationflags=DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP,
                     close_fds=True, shell=True)
-        time.sleep(2)
-        print('TOR Node setup is complete!')
-        input("Press enter to exit...)")
+            time.sleep(2)
+            print('TOR Node setup is complete!')
+            input("Press enter to exit...")
 
     def write_torrc():
         print('Configuring torrc...')
