@@ -12,8 +12,7 @@ If you don't have nodes set up try using https://github.com/lightning-power-user
 
 # Install
 
-Download and open the latest release for your operating system:
-https://github.com/freehodl/tor-node/realeases
+Download and open the latest release for your operating system
 
 # TOR Node
 
